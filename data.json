@@ -21,6 +21,138 @@
             "src": "https://xgct-video.bzcdn.net/ec927bb0-2224-4470-a90c-100cf7d44d50/640x360/video.m3u8"
           }
         ]
+      },
+      {
+        "epId": "ep2",
+        "weight": 2,
+        "name": "第02話 馬上就來做吧？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/fc546485-f64d-4e34-9f06-d58f77b02a9c/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep3",
+        "weight": 3,
+        "name": "第03話 那就在一起吧？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/c931b1e7-e9ce-41d5-ab8e-631299e338e3/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep4",
+        "weight": 4,
+        "name": "第04話 這是女朋友的嗎？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/e6dee6c1-572b-4773-b385-7c72f6e20055/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep5",
+        "weight": 5,
+        "name": "第05話 因爲這是在場最棒的乳袋吧？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/22d6ff0a-775f-471b-887f-aacf55eb8b91/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep6",
+        "weight": 6,
+        "name": "第06話 真假！？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/a1c7b308-fbce-49d5-81ad-e9793f488d79/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep7",
+        "weight": 7,
+        "name": "第07話 和喜番的人在家約會太不妙了",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/03dac263-f285-44cf-9749-1bf846024a55/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep8",
+        "weight": 8,
+        "name": "第08話 我推薦逆光拍",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/216949a1-d0d8-4692-99a6-bbc21e0880c0/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep9",
+        "weight": 9,
+        "name": "第09話 看了照片之後發生了些事",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/d0b9ca1a-95dd-4da1-9c57-afa2d2d8ad1e/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep10",
+        "weight": 10,
+        "name": "第10話 每個人的心裡都有各種想法",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/970288db-54c3-4aac-9997-a791db6aae39/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep11",
+        "weight": 11,
+        "name": "第11話 我現在在愛情賓館",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/4075825b-affa-4b7d-ab11-c733be884e8e/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep12",
+        "weight": 12,
+        "name": "第12話 更衣人偶墜入愛河",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/614fac24-d474-4418-9005-aa0a6ff91917/640x360/video.m3u8"
+          }
+        ]
       }
     ]
   }
