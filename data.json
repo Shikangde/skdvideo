@@ -155,5 +155,162 @@
         ]
       }
     ]
+  },
+  {
+    "animeId": "2",
+    "weight": 2,
+    "title": "更衣人偶坠入爱河 第二季",
+    "cover": "https://img.fankuhub.com/i/anime/cmpaxwmg00qc9mhlhb9p25vmn/785bfb8701b7dc6dfbbe57b7/detail.webp",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "ep1",
+        "weight": 1,
+        "name": "第13話 五條新菜 15歲 青春期",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/a0adf908-c248-41f5-a45b-aa0eb1941fcd/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep2",
+        "weight": 2,
+        "name": "第14話 因爲胸部是可以裝備上去的",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/742cbddf-a9be-483e-84ab-9b5123951774/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep3",
+        "weight": 3,
+        "name": "第15話 日常篇也超喜歡的~~~",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/eabeb1b4-b1f0-42b3-a97b-0e4fa82bf9de/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep4",
+        "weight": 4,
+        "name": "第16話 有關我身體的事，他全部都知道",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/eabeb1b4-b1f0-42b3-a97b-0e4fa82bf9de/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep5",
+        "weight": 5,
+        "name": "第17話 8億",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/a957878d-c03b-4e2f-a861-771eb9f6fa38/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep6",
+        "weight": 6,
+        "name": "第18話 我絕對會用我這雙手",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/3ddf8e5d-1f69-4bfc-9490-d10a9a810e90/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep7",
+        "weight": 7,
+        "name": "第19話 留下回憶吧！",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/134ae25d-5572-42f4-bf90-43f071b2575a/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep8",
+        "weight": 8,
+        "name": "第20話 我只能想到用課金來表達感謝",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/f6c1a2d4-cf10-4592-b0d7-b058be085907/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep9",
+        "weight": 9,
+        "name": "第21話 我今晚沒有打算睡覺",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/16e1d9ee-fb75-45d8-ae34-fd02d05b4370/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep10",
+        "weight": 10,
+        "name": "第22話 現在開始全都要做！？",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/97662bbc-b5cf-4bd6-86ac-3ecc230cbcef/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep11",
+        "weight": 11,
+        "name": "第23話 我一直以爲自己的人生纔不會發生好事",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/41cd0ee3-5438-49b5-a841-0cdf96cec54f/640x360/video.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "ep12",
+        "weight": 12,
+        "name": "第24話 我親愛的換裝娃娃",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/e85c1e85-4a0e-44c6-811b-0e77202b47fd/640x360/video.m3u8"
+          }
+        ]
+      }
+    ]
   }
 ]
