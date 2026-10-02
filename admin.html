@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh‑CN">
+<head>
+<meta charset="UTF‑8">
+<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<title>本地静态站资源管理面板</title>
+<style>
+*{box‑sizing:border‑box;margin:0;padding:0;font‑family:system‑ui}
+body{background:#121212;color:#eee;padding:24px;max‑width:1300px;margin:0 auto}
+h1,h2,h3{margin‑bottom:12px;margin‑top:20px}
+.box{background:#1e1e1e;padding:18px;border‑radius:10px;margin‑bottom:18px;border:1px solid #333}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;background:#2a2a2a;border:1px solid #444;color:#fff;border‑radius:6px;font‑size:14px}
+button{padding:9px 14px;margin:4px;background:#e50914;color:#fff;border:none;border‑radius:6px;cursor:pointer;font‑size:14px}
+button.secondary{background:#3a3a3a}
+pre{background:#222;padding:12px;border‑radius:6px;white‑space:pre‑wrap;max‑height:320px;overflow:auto;margin‑top:8px;font‑size:12px}
+.row{display:grid;grid‑template‑columns:1fr 1fr;gap:12px}
+small{color:#aaa}
+.file‑wrap{margin:8px 0}
+.item‑block{border:1px solid #444;padding:10px;border‑radius:6px;margin:8px 0}
+</style>
+</head>
+<body>
+<h1>静态番剧站｜本地管理面板</h1>
+<div class="box">
+  <h3>导入已有 data.json（继续编辑旧数据）</h3>
+  <div class="file‑wrap">
+    <input type="file" id="importFile" accept=".json">
+  </div>
+  <small>不导入则从空列表开始新建</small>
+</div>
+
+<div class="box">
+  <h3>①新增 / 编辑动漫主体</h3>
+  <div class="row">
+    <div>
+      <input placeholder="动漫唯一ID animeId" id="animeId">
+      <small>示例：a001，不可重复</small>
+    </div>
+    <div>
+      <input placeholder="排序权重 weight（数字越大越靠前）" id="animeWeight" value="0">
+      <small>用于首页排序</small>
+    </div>
+  </div>
+  <input placeholder="番剧标题 title" id="animeTitle">
+  <input placeholder="封面图片链接 cover" id="animeCover">
+  <input placeholder="卡片悬浮预览缩略图 previewThumb（选填）" id="previewThumb">
+  <div class="row">
+    <div>
+      <input placeholder="标签 tag（更新/完结）" id="animeTag" value="更新">
+    </div>
+    <div>
+      <input placeholder="元信息 meta" id="animeMeta" value="番剧">
+    </div>
+  </div>
+  <input placeholder="年份 year" id="animeYear" value="2026">
+  <textarea placeholder="简介 description" id="animeDesc" rows="3"></textarea>
+  <button onclick="addAnime()">✅添加这条动漫</button>
+</div>
+
+<div class="box">
+  <h3>②追加剧集（给已存在的animeId添加新剧集）</h3>
+  <input placeholder="目标动漫ID animeId" id="appendAnimeId">
+  <div class="row">
+    <div>
+      <input placeholder="剧集ID epId" id="appendEpId">
+      <small>示例 ep1</small>
+    </div>
+    <div>
+      <input placeholder="剧集权重 epWeight 数字越大越靠前" id="appendEpWeight" value="0">
+    </div>
+  </div>
+  <input placeholder="剧集名称 name" id="appendEpName">
+  <small>添加完剧集后，往下填写线路，再点【追加这条剧集】</small>
+  <div class="item‑block">
+    <h4>本集线路信息</h4>
+    <input placeholder="线路名称 lineName" id="appendLineName" value="线路1">
+    <select id="appendLineType">
+      <option value="m3u8">m3u8</option>
+      <option value="mp4">mp4</option>
+    </select>
+    <input placeholder="播放src地址" id="appendLineSrc">
+  </div>
+  <button onclick="appendEpisode()">➕追加剧集（带当前线路）</button>
+</div>
+
+<div class="box">
+  <h3>③追加线路：给【已有的剧集】多加一条播放线路</h3>
+  <input placeholder="动漫ID animeId" id="addLineAnimeId">
+  <input placeholder="剧集ID epId" id="addLineEpId">
+  <input placeholder="新增线路名称 lineName" id="addLineName" value="线路2">
+  <select id="addLineType">
+    <option value="m3u8">m3u8</option>
+    <option value="mp4">mp4</option>
+  </select>
+  <input placeholder="新增线路src" id="addLineSrc">
+  <button onclick="appendSourceToEp()">🔗给现有剧集追加线路</button>
+</div>
+
+<div class="box">
+  <h3>当前全部数据预览</h3>
+  <pre id="jsonPreview"></pre>
+  <br>
+  <button onclick="sortAllData()">🔃按权重重新整体排序</button>
+  <button onclick="exportDownload()">💾导出并下载 data.json</button>
+  <button onclick="copyJson()">📋复制JSON到剪贴板</button>
+  <button class="secondary" onclick="clearAll()">🗑清空全部列表（谨慎）</button>
+</div>
+
+<script>
+let animeList = [];
+
+//导入json文件
+document.getElementById('importFile').onchange = function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try{
+      animeList = JSON.parse(ev.target.result);
+      refreshPreview();
+      alert("导入成功，已经加载数据，可以继续编辑");
+    }catch(err){
+      alert("json解析失败："+err.message);
+    }
+  }
+  reader.readAsText(file);
+}
+
+//添加动漫主体
+function addAnime(){
+  const animeId = document.getElementById('animeId').value.trim();
+  const weight = Number(document.getElementById('animeWeight').value.trim()||0);
+  const title = document.getElementById('animeTitle').value.trim();
+  const cover = document.getElementById('animeCover').value.trim();
+  const previewThumb = document.getElementById('previewThumb').value.trim();
+  const tag = document.getElementById('animeTag').value.trim();
+  const meta = document.getElementById('animeMeta').value.trim();
+  const year = document.getElementById('animeYear').value.trim();
+  const description = document.getElementById('animeDesc').value.trim();
+
+  if(!animeId||!title){
+    alert("动漫ID、标题不能为空");
+    return;
+  }
+  const exist = animeList.find(x=>x.animeId === animeId);
+  if(exist){
+    alert("该animeId已经存在，不能重复新增，请追加剧集");
+    return;
+  }
+  animeList.push({
+    animeId,
+    weight,
+    title,
+    cover,
+    previewThumb,
+    tag,
+    meta,
+    year,
+    description,
+    episodes:[]
+  });
+  refreshPreview();
+  alert("动漫主体添加成功！现在可以追加剧集");
+}
+
+//追加剧集（带一条线路）
+function appendEpisode(){
+  const targetAid = document.getElementById('appendAnimeId').value.trim();
+  const epId = document.getElementById('appendEpId').value.trim();
+  const epWeight = Number(document.getElementById('appendEpWeight').value.trim()||0);
+  const epName = document.getElementById('appendEpName').value.trim();
+  const lineName = document.getElementById('appendLineName').value.trim();
+  const lineType = document.getElementById('appendLineType').value;
+  const lineSrc = document.getElementById('appendLineSrc').value.trim();
+
+  const anime = animeList.find(x=>x.animeId === targetAid);
+  if(!anime){
+    alert("找不到该动漫ID，请先新增动漫主体");
+    return;
+  }
+  if(!epId||!epName||!lineSrc){
+    alert("剧集ID、剧集名称、播放地址不能为空");
+    return;
+  }
+  //检查同动漫下epId是否重复
+  const dup = anime.episodes.find(e=>e.epId === epId);
+  if(dup){
+    alert("该动漫下epId已存在，请改用【追加线路】功能");
+    return;
+  }
+  anime.episodes.push({
+    epId,
+    weight:epWeight,
+    name:epName,
+    sources:[
+      {lineName,type:lineType,src:lineSrc}
+    ]
+  })
+  refreshPreview();
+  alert("✅剧集追加完成");
+}
+
+//给已有剧集追加线路
+function appendSourceToEp(){
+  const aid = document.getElementById('addLineAnimeId').value.trim();
+  const eid = document.getElementById('addLineEpId').value.trim();
+  const ln = document.getElementById('addLineName').value.trim();
+  const lt = document.getElementById('addLineType').value;
+  const ls = document.getElementById('addLineSrc').value.trim();
+
+  const anime = animeList.find(x=>x.animeId === aid);
+  if(!anime){alert("找不到动漫ID");return;}
+  const ep = anime.episodes.find(e=>e.epId === eid);
+  if(!ep){alert("找不到该剧集epId");return;}
+  if(!ls){alert("播放地址不能为空");return;}
+  ep.sources.push({lineName:ln,type:lt,src:ls});
+  refreshPreview();
+  alert("✅线路追加完成");
+}
+
+//整体排序：动漫按weight降序；每个动漫内部剧集按weight降序
+function sortAllData(){
+  animeList.sort((a,b)=> b.weight - a.weight);
+  animeList.forEach(ani=>{
+    ani.episodes.sort((e1,e2)=> e2.weight - e1.weight);
+  })
+  refreshPreview();
+  alert("✅已全部按权重重新排序");
+}
+
+function refreshPreview(){
+  document.getElementById('jsonPreview').innerText = JSON.stringify(animeList,null,2);
+}
+
+//下载导出data.json
+function exportDownload(){
+  const jsonStr = JSON.stringify(animeList,null,2);
+  const blob = new Blob([jsonStr],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "data.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+//【新增】复制JSON到剪贴板
+async function copyJson(){
+  try{
+    const jsonStr = JSON.stringify(animeList,null,2);
+    await navigator.clipboard.writeText(jsonStr);
+    alert("✅JSON已复制到剪贴板！");
+  }catch(err){
+    alert("❌复制失败，请手动选中预览框复制："+err.message);
+  }
+}
+
+function clearAll(){
+  if(confirm("确认清空全部列表？不可恢复！")){
+    animeList = [];
+    refreshPreview();
+  }
+}
+</script>
+</body>
+</html>

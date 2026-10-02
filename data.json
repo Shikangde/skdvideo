@@ -1,0 +1,27 @@
+[
+  {
+    "animeId": "1",
+    "weight": 1,
+    "title": "更衣人偶坠入爱河",
+    "cover": "https://bkimg.cdn.bcebos.com/pic/2fdda3cc7cd98d1001e95abadf6eaf0e7bec55e73aa4?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "ep1",
+        "weight": 0,
+        "name": "第一集",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "m3u8",
+            "src": "https://xgct-video.bzcdn.net/ec927bb0-2224-4470-a90c-100cf7d44d50/640x360/video.m3u8"
+          }
+        ]
+      }
+    ]
+  }
+]
