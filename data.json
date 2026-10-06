@@ -312,5 +312,30 @@
         ]
       }
     ]
+  },
+  {
+    "animeId": "002",
+    "weight": 0,
+    "title": "你的名字",
+    "cover": "",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "你的名字（无字幕）",
+        "sources": [
+          {
+            "lineName": "线路1",
+            "type": "mp4",
+            "src": "https://skddm01.4219520.xyz/yourname.mp4"
+          }
+        ]
+      }
+    ]
   }
 ]
