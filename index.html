@@ -4,10 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>热乎の新番</title>
-<!-- hls.js改为本地同域 -->
+<link rel="stylesheet" href="/plyr.css">
 <script src="/hls.min.js"></script>
-<!-- movi-player本地同域 -->
-<script type="module" src="/element.js"></script>
+<script src="/plyr.min.js"></script>
 <style>
   :root{
     --bg:#111;
@@ -234,14 +233,15 @@
     background:rgba(0,0,0,0.85);
     z-index:200;
     display:none;
-    padding:40px;
+    padding:24px;
     overflow:auto;
   }
   .detail-modal.show{
     display:block;
   }
   .detail-wrap{
-    max-width:1300px;
+    max-width: 92vw;
+    max-height: 92vh;
     margin:0 auto;
     background:var(--card-bg);
     border-radius:12px;
@@ -262,16 +262,12 @@
     gap:24px;
   }
 
-  .player-wrap video {
-    width: 100%;
-    border-radius: 8px;
-    background: #000;
-  }
-  movi-player{
+  .player-wrap{
     width:100%;
-    border-radius:8px;
-    background:#000;
-    display:block;
+  }
+  .plyr {
+    border-radius: 8px;
+    overflow:hidden;
   }
 
   /* 右侧选集面板 */
@@ -315,14 +311,20 @@
     .video-grid {
       grid-template-columns: repeat(4, 1fr);
     }
+    .detail-body{
+      grid-template-columns: 1fr 300px;
+    }
   }
   @media (max-width: 992px) {
-    /* 移动端变回上下布局 */
+    /* 中等及以下屏幕变回上下布局 */
     .detail-body{
       grid-template-columns:1fr;
     }
   }
   @media (max-width: 768px) {
+    body{
+      min-width:unset;
+    }
     .video-grid {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -335,6 +337,12 @@
     }
     .preview-tip{
       display:none;
+    }
+    .section{
+      padding:0 24px 40px;
+    }
+    .navbar{
+      padding:0 16px;
     }
   }
 </style>
@@ -377,8 +385,7 @@
     <div class="detail-body">
       <!-- 左侧播放器区域 -->
       <div class="player-wrap">
-        <video id="videoPlayer" controls></video>
-        <movi-player id="moviPlayer" controls thumb showtitle style="display:none;"></movi-player>
+        <video id="videoPlayer"></video>
       </div>
       <!-- 右侧：线路+选集 -->
       <div class="sidebar-panel">
@@ -397,7 +404,6 @@
   const grid = document.getElementById("videoGrid");
   const detailModal = document.getElementById("detailModal");
   const videoPlayer = document.getElementById("videoPlayer");
-  const moviPlayer = document.getElementById("moviPlayer");
   const searchInput = document.getElementById("searchInput");
   const themeBtn = document.getElementById("themeBtn");
   const lineSelect = document.getElementById("lineSelect");
@@ -406,6 +412,7 @@
   const epList = document.getElementById("epList");
 
   let hls = null;
+  let plyrInstance = null;
   let videoList = [];
   let filterList = [];
   let currentAnimeIndex = null;
@@ -425,37 +432,6 @@
     localStorage.setItem("siteTheme", isLight ? "light":"dark");
   }
   loadTheme();
-
-  // ========== 播放器快捷键 ==========
-  videoPlayer.addEventListener('keydown', function(e){
-    switch(e.code){
-      case "Space":
-        e.preventDefault();
-        if(videoPlayer.paused) videoPlayer.play();
-        else videoPlayer.pause();
-        break;
-      case "ArrowLeft":
-        e.preventDefault();
-        videoPlayer.currentTime -= 10;
-        break;
-      case "ArrowRight":
-        e.preventDefault();
-        videoPlayer.currentTime += 10;
-        break;
-      case "ArrowUp":
-        e.preventDefault();
-        videoPlayer.volume = Math.min(1, videoPlayer.volume + 0.1);
-        break;
-      case "ArrowDown":
-        e.preventDefault();
-        videoPlayer.volume = Math.max(0, videoPlayer.volume - 0.1);
-        break;
-      case "KeyM":
-        e.preventDefault();
-        videoPlayer.muted = !videoPlayer.muted;
-        break;
-    }
-  })
 
   // ========== 读取data.json ==========
   async function loadVideoData(){
@@ -577,68 +553,31 @@
   //关闭详情弹窗
   function closeDetail(){
     detailModal.classList.remove("show");
-    videoPlayer.pause();
-    moviPlayer.src="";
+    if(plyrInstance){
+      plyrInstance.destroy();
+      plyrInstance=null;
+    }
+    videoPlayer.src="";
     if (hls) {
       hls.destroy();
       hls = null;
     }
   }
 
-  // ========== 播放核心（移除倍速相关逻辑） ==========
+  // ========== 播放核心：mp4/m3u8使用Plyr ==========
   function playVideo(type, url, subUrl){
     if (hls) {
       hls.destroy();
       hls = null;
     }
+    if(plyrInstance){
+      plyrInstance.destroy();
+      plyrInstance=null;
+    }
     videoPlayer.src = "";
-    moviPlayer.src="";
-    videoPlayer.style.display="block";
-    moviPlayer.style.display="none";
 
-    videoPlayer.onpause = null;
-    videoPlayer.ontimeupdate = null;
-
-    if(type === "mkv"){
-      videoPlayer.style.display="none";
-      moviPlayer.style.display="block";
-      moviPlayer.src=url;
-      if(subUrl){
-        const oldTrack = moviPlayer.querySelector('track');
-        if(oldTrack) oldTrack.remove();
-        const track=document.createElement('track');
-        track.kind="subtitles";
-        track.src=subUrl;
-        track.srclang="zh";
-        track.label="中文";
-        track.default=true;
-        moviPlayer.appendChild(track);
-      }
-      moviPlayer.play();
-      const anime = filterList[currentAnimeIndex];
-      const timeHandler=()=>{
-        if(!moviPlayer.paused){
-          localStorage.setItem(`play_${anime.title}`, JSON.stringify({
-            ep: currentEpIndex,
-            line: currentLineIndex,
-            time: moviPlayer.currentTime
-          }))
-        }
-      }
-      moviPlayer.ontimeupdate=timeHandler;
-      moviPlayer.onloadedmetadata=()=>{
-        const saved = localStorage.getItem(`play_${anime.title}`);
-        if(saved){
-          const data = JSON.parse(saved);
-          if(data.ep === currentEpIndex && data.line === currentLineIndex){
-            moviPlayer.currentTime = data.time;
-          }
-        }
-        moviPlayer.play();
-      }
-    }else if (type === "mp4") {
+    if (type === "mp4") {
       videoPlayer.src = url;
-      videoPlayer.load();
     } else if (type === "m3u8") {
       if (Hls.isSupported()) {
         hls = new Hls();
@@ -648,28 +587,45 @@
         videoPlayer.src = url;
       }
     }
-    if(type!=="mkv"){
-      const anime = filterList[currentAnimeIndex];
-      videoPlayer.ontimeupdate = function(){
-        if(!videoPlayer.paused){
-          localStorage.setItem(`play_${anime.title}`, JSON.stringify({
-            ep: currentEpIndex,
-            line: currentLineIndex,
-            time: videoPlayer.currentTime
-          }))
-        }
-      }
-      videoPlayer.onloadedmetadata = function(){
-        const saved = localStorage.getItem(`play_${anime.title}`);
-        if(saved){
-          const data = JSON.parse(saved);
-          if(data.ep === currentEpIndex && data.line === currentLineIndex){
-            videoPlayer.currentTime = data.time;
-          }
-        }
-        videoPlayer.play();
-      }
+
+    //初始化Plyr，控件：播放、进度、当前时间、静音、音量、全屏
+    plyrInstance = new Plyr(videoPlayer,{
+      controls:['play','progress','current-time','mute','volume','fullscreen']
+    });
+    //外挂字幕
+    if(subUrl){
+      const oldTrack = videoPlayer.querySelector('track');
+      if(oldTrack) oldTrack.remove();
+      const track=document.createElement('track');
+      track.kind="subtitles";
+      track.src=subUrl;
+      track.srclang="zh";
+      track.label="中文";
+      track.default=true;
+      videoPlayer.appendChild(track);
     }
+    plyrInstance.play();
+
+    const anime = filterList[currentAnimeIndex];
+    plyrInstance.on('timeupdate',()=>{
+      if(!plyrInstance.paused){
+        localStorage.setItem(`play_${anime.title}`, JSON.stringify({
+          ep: currentEpIndex,
+          line: currentLineIndex,
+          time: plyrInstance.currentTime
+        }))
+      }
+    })
+    plyrInstance.on('loadedmetadata',()=>{
+      const saved = localStorage.getItem(`play_${anime.title}`);
+      if(saved){
+        const data = JSON.parse(saved);
+        if(data.ep === currentEpIndex && data.line === currentLineIndex){
+          plyrInstance.currentTime = data.time;
+        }
+      }
+      plyrInstance.play();
+    })
   }
 
   loadVideoData();
