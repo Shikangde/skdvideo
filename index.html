@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>热乎の新番</title>
-<!-- BootCDN plyr -->
+<!-- hls.js改为本地同域 -->
 <script src="/hls.min.js"></script>
 <style>
   :root{
@@ -104,7 +104,7 @@
     position: relative;
     height: 420px;
     background: linear-gradient(to right, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.4) 70%),
-      url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
     display: flex;
     align-items: center;
     padding: 0 48px;
@@ -148,7 +148,7 @@
     text-decoration:none;
     font-size:14px;
   }
-  /* 视频卡片网格 固定8列，不会自动变少 */
+  /* 视频卡片网格 */
   .video-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -232,14 +232,14 @@
     background:rgba(0,0,0,0.85);
     z-index:200;
     display:none;
-    padding:24px;
+    padding:40px;
     overflow:auto;
   }
   .detail-modal.show{
     display:block;
   }
   .detail-wrap{
-    width: 1200px;
+    max-width:1300px;
     margin:0 auto;
     background:var(--card-bg);
     border-radius:12px;
@@ -253,19 +253,16 @@
     background:none;border:none;color:var(--text);
     cursor:pointer;
   }
-  /* 播放器固定左右分栏：播放器左，选集右，不会自动上下堆叠 */
+  /* 修改布局：播放器在左，选集面板在右 */
   .detail-body{
     display:grid;
-    grid-template-columns: 820px 340px;
+    grid-template-columns: 1fr 340px;
     gap:24px;
   }
-
-  .player-wrap{
-    width:820px;
-  }
-  video{
-    width:100%;
-    border-radius:8px;
+  .player-wrap video {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
   }
   /* 右侧选集面板 */
   .sidebar-panel{
@@ -298,6 +295,37 @@
   .light-theme .ep-item{
     background:#eee;color:#111;
   }
+  @media (max-width: 1400px) {
+    .video-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  @media (max-width: 1200px) {
+    .video-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 992px) {
+    /* 移动端变回上下布局 */
+    .detail-body{
+      grid-template-columns:1fr;
+    }
+  }
+  @media (max-width: 768px) {
+    .video-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .hero {
+      height: 280px;
+      padding: 0 24px;
+    }
+    .hero-content h1 {
+      font-size: 28px;
+    }
+    .preview-tip{
+      display:none;
+    }
+  }
 </style>
 </head>
 <body>
@@ -318,6 +346,7 @@
     <button id="themeBtn">🌓 切换主题</button>
   </div>
 </nav>
+
 <!-- 主推荐横幅 -->
 <section class="hero">
   <div class="hero-content">
@@ -326,17 +355,19 @@
     <button class="btn-play" onclick="openDetail(0)">立即播放</button>
   </div>
 </section>
+
 <!-- 视频列表 -->
 <section class="section">
   <h2 class="section-title">最近更新的当季番剧 <a href="#">查看更多 ></a></h2>
   <div class="video-grid" id="videoGrid"></div>
 </section>
+
 <!-- 详情+选集弹窗 -->
 <div class="detail-modal" id="detailModal">
   <div class="detail-wrap">
     <button class="detail-close" onclick="closeDetail()">✕</button>
     <div class="detail-body">
-      <!-- 左侧播放器区域，原生video -->
+      <!-- 左侧播放器区域 -->
       <div class="player-wrap">
         <video id="videoPlayer" controls></video>
       </div>
@@ -353,6 +384,7 @@
     </div>
   </div>
 </div>
+
 <script>
   const grid = document.getElementById("videoGrid");
   const detailModal = document.getElementById("detailModal");
@@ -385,6 +417,37 @@
   }
   loadTheme();
 
+  // ========== 播放器快捷键 ==========
+  videoPlayer.addEventListener('keydown', function(e){
+    switch(e.code){
+      case "Space":
+        e.preventDefault();
+        if(videoPlayer.paused) videoPlayer.play();
+        else videoPlayer.pause();
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        videoPlayer.currentTime -= 10;
+        break;
+      case "ArrowRight":
+        e.preventDefault();
+        videoPlayer.currentTime += 10;
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        videoPlayer.volume = Math.min(1, videoPlayer.volume + 0.1);
+        break;
+      case "ArrowDown":
+        e.preventDefault();
+        videoPlayer.volume = Math.max(0, videoPlayer.volume - 0.1);
+        break;
+      case "KeyM":
+        e.preventDefault();
+        videoPlayer.muted = !videoPlayer.muted;
+        break;
+    }
+  })
+
   // ========== 读取data.json ==========
   async function loadVideoData(){
     const res = await fetch('data.json');
@@ -393,11 +456,11 @@
     renderCards();
   }
 
-  // ========== 渲染卡片 ==========
+  // ========== 渲染卡片，修复图片空链接背景问题 ==========
   function renderCards() {
     grid.innerHTML = "";
     if(filterList.length === 0){
-      grid.innerHTML = `<div class="no-result">暂无数据</div>`;
+      grid.innerHTML = `<div class="no-result">没有找到匹配的番剧</div>`;
       return;
     }
     filterList.forEach((v, index) => {
@@ -467,7 +530,7 @@
     playEp(currentEpIndex);
   }
 
-  //渲染线路下拉
+  //渲染线路下拉框
   function renderLineSelect(ep){
     lineSelect.innerHTML = "";
     ep.sources.forEach((source, lineIdx)=>{
@@ -483,7 +546,7 @@
     }
   }
 
-  //播放集数
+  //播放指定集数
   function playEp(epIdx){
     currentEpIndex = epIdx;
     const anime = filterList[currentAnimeIndex];
@@ -499,48 +562,59 @@
     const anime = filterList[currentAnimeIndex];
     const ep = anime.episodes[currentEpIndex];
     const source = ep.sources[currentLineIndex];
-    playVideo(source.type, source.src);
+    playVideo(source.type, source.src, source.subtitle);
   }
 
-  //关闭弹窗
+  //关闭详情弹窗
   function closeDetail(){
     detailModal.classList.remove("show");
     videoPlayer.pause();
-    videoPlayer.src="";
     if (hls) {
       hls.destroy();
       hls = null;
     }
   }
 
-  // 原生播放器，mp4 / m3u8
-  function playVideo(type, url){
+  // ========== 播放核心 ==========
+  function playVideo(type, url, subUrl){
     if (hls) {
       hls.destroy();
       hls = null;
     }
     videoPlayer.src = "";
-    if(type === "m3u8"){
-      if(Hls.isSupported()){
+
+    // 原生播放器仅支持 mp4 / m3u8
+    if (type === "mp4") {
+      videoPlayer.src = url;
+      videoPlayer.load();
+    } else if (type === "m3u8") {
+      if (Hls.isSupported()) {
         hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(videoPlayer);
-      }else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')){
+      } else if (videoPlayer.canPlayType("application/vnd.apple.mpegurl")) {
         videoPlayer.src = url;
       }
-    }else if(type === "mp4"){
-      videoPlayer.src = url;
     }
-    videoPlayer.play();
-
-    // 记录播放进度
     const anime = filterList[currentAnimeIndex];
     videoPlayer.ontimeupdate = function(){
-      localStorage.setItem(`play_${anime.title}`, JSON.stringify({
-        ep: currentEpIndex,
-        line: currentLineIndex,
-        time: videoPlayer.currentTime
-      }))
+      if(!videoPlayer.paused){
+        localStorage.setItem(`play_${anime.title}`, JSON.stringify({
+          ep: currentEpIndex,
+          line: currentLineIndex,
+          time: videoPlayer.currentTime
+        }))
+      }
+    }
+    videoPlayer.onloadedmetadata = function(){
+      const saved = localStorage.getItem(`play_${anime.title}`);
+      if(saved){
+        const data = JSON.parse(saved);
+        if(data.ep === currentEpIndex && data.line === currentLineIndex){
+          videoPlayer.currentTime = data.time;
+        }
+      }
+      videoPlayer.play();
     }
   }
 
