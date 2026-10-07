@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>热乎の新番</title>
-<!-- hls.js改为本地同域，移除jsdelivr -->
+<!-- hls.js改为本地同域 -->
 <script src="/hls.min.js"></script>
 <!-- movi-player本地同域 -->
 <script type="module" src="/element.js"></script>
@@ -172,7 +172,7 @@
   .video-card .cover {
     width: 100%;
     aspect-ratio: 3 / 4;
-    background: #000 center/cover no-repeat;
+    background: #222 center/cover no-repeat;
     position: relative;
   }
   .video-card .cover .tag {
@@ -215,7 +215,7 @@
     width:280px;
     height:158px;
     border-radius:8px;
-    background:#000 center/cover no-repeat;
+    background:#222 center/cover no-repeat;
     box-shadow:0 10px 30px #0008;
     z-index:99;
     opacity:0;
@@ -241,7 +241,7 @@
     display:block;
   }
   .detail-wrap{
-    max-width:1100px;
+    max-width:1300px;
     margin:0 auto;
     background:var(--card-bg);
     border-radius:12px;
@@ -255,19 +255,46 @@
     background:none;border:none;color:var(--text);
     cursor:pointer;
   }
+  /* 修改布局：播放器在左，选集面板在右 */
   .detail-body{
     display:grid;
-    grid-template-columns:300px 1fr;
+    grid-template-columns: 1fr 340px;
     gap:24px;
   }
-  .detail-cover{
-    width:100%;aspect-ratio:3/4;border-radius:8px;background:center/cover no-repeat;
+
+  .player-wrap video {
+    width: 100%;
+    border-radius: 8px;
+    background: #000;
+  }
+  movi-player{
+    width:100%;
+    border-radius:8px;
+    background:#000;
+    display:block;
+  }
+
+  /* 右侧选集面板 */
+  .sidebar-panel{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .line-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  #lineSelect{
+    padding:6px 10px;border-radius:6px;
   }
   .ep-list{
-    margin-top:20px;
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
     gap:10px;
+    max-height:550px;
+    overflow-y:auto;
+    padding-right:4px;
   }
   .ep-item{
     padding:8px;border-radius:6px;background:#333;text-align:center;cursor:pointer;
@@ -278,28 +305,7 @@
   .light-theme .ep-item{
     background:#eee;color:#111;
   }
-  .player-wrap video {
-    width: 100%;
-    border-radius: 8px;
-    background: #000;
-    margin-top:16px;
-  }
-  movi-player{
-    width:100%;
-    border-radius:8px;
-    background:#000;
-    margin-top:16px;
-    display:block;
-  }
-  .control-row{
-    margin-top:12px;
-    display:flex;
-    gap:16px;
-    align-items:center;
-  }
-  #lineSelect,#speedSelect{
-    padding:6px 10px;border-radius:6px;
-  }
+
   @media (max-width: 1400px) {
     .video-grid {
       grid-template-columns: repeat(6, 1fr);
@@ -310,12 +316,15 @@
       grid-template-columns: repeat(4, 1fr);
     }
   }
+  @media (max-width: 992px) {
+    /* 移动端变回上下布局 */
+    .detail-body{
+      grid-template-columns:1fr;
+    }
+  }
   @media (max-width: 768px) {
     .video-grid {
       grid-template-columns: repeat(3, 1fr);
-    }
-    .detail-body{
-      grid-template-columns:1fr;
     }
     .hero {
       height: 280px;
@@ -323,9 +332,6 @@
     }
     .hero-content h1 {
       font-size: 28px;
-    }
-    .control-row{
-      flex-wrap:wrap;
     }
     .preview-tip{
       display:none;
@@ -369,33 +375,20 @@
   <div class="detail-wrap">
     <button class="detail-close" onclick="closeDetail()">✕</button>
     <div class="detail-body">
-      <div>
-        <div class="detail-cover" id="detailCover"></div>
-        <h2 id="detailTitle" style="margin-top:12px;"></h2>
-        <div id="detailMeta" style="color:var(--text-2);margin:6px 0;"></div>
-        <div class="ep-list" id="epList"></div>
-      </div>
+      <!-- 左侧播放器区域 -->
       <div class="player-wrap">
-        <div class="control-row">
-          <div>
-            <span>选择线路：</span>
-            <select id="lineSelect"></select>
-          </div>
-          <div>
-            <span>播放倍速：</span>
-            <select id="speedSelect">
-              <option value="0.5">0.5x</option>
-              <option value="0.75">0.75x</option>
-              <option value="1" selected>1.0x</option>
-              <option value="1.25">1.25x</option>
-              <option value="1.5">1.5x</option>
-              <option value="1.75">1.75x</option>
-              <option value="2">2.0x</option>
-            </select>
-          </div>
-        </div>
         <video id="videoPlayer" controls></video>
         <movi-player id="moviPlayer" controls thumb showtitle style="display:none;"></movi-player>
+      </div>
+      <!-- 右侧：线路+选集 -->
+      <div class="sidebar-panel">
+        <div class="line-row">
+          <span>选择线路：</span>
+          <select id="lineSelect"></select>
+        </div>
+        <h3 id="detailTitle"></h3>
+        <div id="detailMeta" style="color:var(--text-2);"></div>
+        <div class="ep-list" id="epList"></div>
       </div>
     </div>
   </div>
@@ -408,13 +401,17 @@
   const searchInput = document.getElementById("searchInput");
   const themeBtn = document.getElementById("themeBtn");
   const lineSelect = document.getElementById("lineSelect");
-  const speedSelect = document.getElementById("speedSelect");
+  const detailTitle = document.getElementById("detailTitle");
+  const detailMeta = document.getElementById("detailMeta");
+  const epList = document.getElementById("epList");
+
   let hls = null;
   let videoList = [];
   let filterList = [];
   let currentAnimeIndex = null;
   let currentEpIndex = null;
   let currentLineIndex = 0;
+
   // ========== 主题切换 ==========
   function loadTheme(){
     const saved = localStorage.getItem("siteTheme");
@@ -428,14 +425,7 @@
     localStorage.setItem("siteTheme", isLight ? "light":"dark");
   }
   loadTheme();
-  //倍速切换事件
-  speedSelect.onchange = function(){
-    if(!moviPlayer.hidden){
-      moviPlayer.playbackRate = parseFloat(this.value);
-    }else{
-      videoPlayer.playbackRate = parseFloat(this.value);
-    }
-  }
+
   // ========== 播放器快捷键 ==========
   videoPlayer.addEventListener('keydown', function(e){
     switch(e.code){
@@ -466,6 +456,7 @@
         break;
     }
   })
+
   // ========== 读取data.json ==========
   async function loadVideoData(){
     const res = await fetch('data.json');
@@ -473,7 +464,8 @@
     filterList = [...videoList];
     renderCards();
   }
-  // ========== 渲染卡片 ==========
+
+  // ========== 渲染卡片，修复图片空链接背景问题 ==========
   function renderCards() {
     grid.innerHTML = "";
     if(filterList.length === 0){
@@ -483,20 +475,26 @@
     filterList.forEach((v, index) => {
       const card = document.createElement("div");
       card.className = "video-card";
+
+      // cover背景图片兜底，为空就不设置background‑image
+      const coverBg = v.cover ? `background-image:url('${v.cover}')` : "";
+      const previewBg = v.previewThumb ? `background-image:url('${v.previewThumb}')` : "";
+
       card.innerHTML = `
-        <div class="cover" style="background-image:url('${v.cover}')">
+        <div class="cover" style="${coverBg}">
           <span class="tag">${v.tag}</span>
         </div>
         <div class="info">
           <div class="title">${v.title}</div>
           <div class="meta">${v.meta}<br>${v.year}</div>
         </div>
-        <div class="preview-tip" style="background-image:url('${v.previewThumb || ''}')"></div>
+        <div class="preview-tip" style="${previewBg}"></div>
       `;
       card.onclick = () => openDetail(index);
       grid.appendChild(card);
     });
   }
+
   // ========== 搜索 ==========
   function filterVideo(){
     const keyword = searchInput.value.trim().toLowerCase();
@@ -510,23 +508,24 @@
     renderCards();
   }
   searchInput.addEventListener('input', filterVideo);
+
   // ========== 打开详情弹窗 ==========
   function openDetail(idx){
     currentAnimeIndex = idx;
     const anime = filterList[idx];
-    document.getElementById("detailCover").style.backgroundImage = `url(${anime.cover})`;
-    document.getElementById("detailTitle").innerText = anime.title;
-    document.getElementById("detailMeta").innerText = `${anime.meta} | ${anime.year}`;
-    const epWrap = document.getElementById("epList");
-    epWrap.innerHTML = "";
+    detailTitle.innerText = anime.title;
+    detailMeta.innerText = `${anime.meta} | ${anime.year}`;
+
+    epList.innerHTML = "";
     anime.episodes.forEach((ep, eIdx)=>{
       const epBtn = document.createElement("div");
       epBtn.className = "ep-item";
       epBtn.innerText = ep.name;
       epBtn.onclick = ()=> playEp(eIdx);
-      epWrap.appendChild(epBtn);
+      epList.appendChild(epBtn);
     })
     detailModal.classList.add("show");
+
     const savedProgress = localStorage.getItem(`play_${anime.title}`);
     if(savedProgress){
       const saved = JSON.parse(savedProgress);
@@ -536,11 +535,10 @@
       currentEpIndex = 0;
       currentLineIndex = 0;
     }
-    speedSelect.value = "1";
-    videoPlayer.playbackRate = 1;
-    moviPlayer.playbackRate =1;
+
     playEp(currentEpIndex);
   }
+
   //渲染线路下拉框
   function renderLineSelect(ep){
     lineSelect.innerHTML = "";
@@ -556,6 +554,7 @@
       playCurrentSource();
     }
   }
+
   //播放指定集数
   function playEp(epIdx){
     currentEpIndex = epIdx;
@@ -567,12 +566,14 @@
     renderLineSelect(ep);
     playCurrentSource();
   }
+
   function playCurrentSource(){
     const anime = filterList[currentAnimeIndex];
     const ep = anime.episodes[currentEpIndex];
     const source = ep.sources[currentLineIndex];
     playVideo(source.type, source.src, source.subtitle);
   }
+
   //关闭详情弹窗
   function closeDetail(){
     detailModal.classList.remove("show");
@@ -583,7 +584,8 @@
       hls = null;
     }
   }
-  // ========== 播放核心 ==========
+
+  // ========== 播放核心（移除倍速相关逻辑） ==========
   function playVideo(type, url, subUrl){
     if (hls) {
       hls.destroy();
@@ -612,7 +614,6 @@
         track.default=true;
         moviPlayer.appendChild(track);
       }
-      moviPlayer.playbackRate=parseFloat(speedSelect.value);
       moviPlayer.play();
       const anime = filterList[currentAnimeIndex];
       const timeHandler=()=>{
@@ -670,6 +671,7 @@
       }
     }
   }
+
   loadVideoData();
 </script>
 </body>
