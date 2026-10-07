@@ -4,9 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>热乎の新番</title>
-<!-- BootCDN 国内CDN加载Plyr，解决404 -->
-<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.min.css">
-<script src="https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.min.js"></script>
+<!-- BootCDN plyr -->
 <script src="/hls.min.js"></script>
 <style>
   :root{
@@ -150,7 +148,7 @@
     text-decoration:none;
     font-size:14px;
   }
-  /* 视频卡片网格 */
+  /* 视频卡片网格 固定8列，不会自动变少 */
   .video-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -241,8 +239,7 @@
     display:block;
   }
   .detail-wrap{
-    max-width: 92vw;
-    max-height: 92vh;
+    width: 1200px;
     margin:0 auto;
     background:var(--card-bg);
     border-radius:12px;
@@ -256,21 +253,20 @@
     background:none;border:none;color:var(--text);
     cursor:pointer;
   }
-  /* 修改布局：播放器在左，选集面板在右 */
+  /* 播放器固定左右分栏：播放器左，选集右，不会自动上下堆叠 */
   .detail-body{
     display:grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 820px 340px;
     gap:24px;
   }
 
   .player-wrap{
+    width:820px;
+  }
+  video{
     width:100%;
+    border-radius:8px;
   }
-  .plyr {
-    border-radius: 8px;
-    overflow:hidden;
-  }
-
   /* 右侧选集面板 */
   .sidebar-panel{
     display:flex;
@@ -301,50 +297,6 @@
   }
   .light-theme .ep-item{
     background:#eee;color:#111;
-  }
-
-  @media (max-width: 1400px) {
-    .video-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
-  }
-  @media (max-width: 1200px) {
-    .video-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .detail-body{
-      grid-template-columns: 1fr 300px;
-    }
-  }
-  @media (max-width: 992px) {
-    /* 中等及以下屏幕变回上下布局 */
-    .detail-body{
-      grid-template-columns:1fr;
-    }
-  }
-  @media (max-width: 768px) {
-    body{
-      min-width:unset;
-    }
-    .video-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .hero {
-      height: 280px;
-      padding: 0 24px;
-    }
-    .hero-content h1 {
-      font-size: 28px;
-    }
-    .preview-tip{
-      display:none;
-    }
-    .section{
-      padding:0 24px 40px;
-    }
-    .navbar{
-      padding:0 16px;
-    }
   }
 </style>
 </head>
@@ -384,9 +336,9 @@
   <div class="detail-wrap">
     <button class="detail-close" onclick="closeDetail()">✕</button>
     <div class="detail-body">
-      <!-- 左侧播放器区域 -->
+      <!-- 左侧播放器区域，原生video -->
       <div class="player-wrap">
-        <video id="videoPlayer"></video>
+        <video id="videoPlayer" controls></video>
       </div>
       <!-- 右侧：线路+选集 -->
       <div class="sidebar-panel">
@@ -413,7 +365,6 @@
   const epList = document.getElementById("epList");
 
   let hls = null;
-  let plyrInstance = null;
   let videoList = [];
   let filterList = [];
   let currentAnimeIndex = null;
@@ -442,11 +393,11 @@
     renderCards();
   }
 
-  // ========== 渲染卡片，修复图片空链接背景问题 ==========
+  // ========== 渲染卡片 ==========
   function renderCards() {
     grid.innerHTML = "";
     if(filterList.length === 0){
-      grid.innerHTML = `<div class="no-result">没有找到匹配的番剧</div>`;
+      grid.innerHTML = `<div class="no-result">暂无数据</div>`;
       return;
     }
     filterList.forEach((v, index) => {
@@ -516,7 +467,7 @@
     playEp(currentEpIndex);
   }
 
-  //渲染线路下拉框
+  //渲染线路下拉
   function renderLineSelect(ep){
     lineSelect.innerHTML = "";
     ep.sources.forEach((source, lineIdx)=>{
@@ -532,7 +483,7 @@
     }
   }
 
-  //播放指定集数
+  //播放集数
   function playEp(epIdx){
     currentEpIndex = epIdx;
     const anime = filterList[currentAnimeIndex];
@@ -548,16 +499,13 @@
     const anime = filterList[currentAnimeIndex];
     const ep = anime.episodes[currentEpIndex];
     const source = ep.sources[currentLineIndex];
-    playVideo(source.type, source.src, source.subtitle);
+    playVideo(source.type, source.src);
   }
 
-  //关闭详情弹窗
+  //关闭弹窗
   function closeDetail(){
     detailModal.classList.remove("show");
-    if(plyrInstance){
-      plyrInstance.destroy();
-      plyrInstance=null;
-    }
+    videoPlayer.pause();
     videoPlayer.src="";
     if (hls) {
       hls.destroy();
@@ -565,69 +513,35 @@
     }
   }
 
-  // ========== 播放核心：mp4/m3u8使用Plyr ==========
-  function playVideo(type, url, subUrl){
+  // 原生播放器，mp4 / m3u8
+  function playVideo(type, url){
     if (hls) {
       hls.destroy();
       hls = null;
     }
-    if(plyrInstance){
-      plyrInstance.destroy();
-      plyrInstance=null;
-    }
     videoPlayer.src = "";
-
-    if (type === "mp4") {
-      videoPlayer.src = url;
-    } else if (type === "m3u8") {
-      if (Hls.isSupported()) {
+    if(type === "m3u8"){
+      if(Hls.isSupported()){
         hls = new Hls();
         hls.loadSource(url);
         hls.attachMedia(videoPlayer);
-      } else if (videoPlayer.canPlayType("application/vnd.apple.mpegurl")) {
+      }else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')){
         videoPlayer.src = url;
       }
+    }else if(type === "mp4"){
+      videoPlayer.src = url;
     }
+    videoPlayer.play();
 
-    //初始化Plyr，指定bootcdn的svg图标，解决图标404
-    plyrInstance = new Plyr(videoPlayer,{
-      controls:['play','progress','current-time','mute','volume','fullscreen'],
-      iconUrl: "https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.svg"
-    });
-    //外挂字幕
-    if(subUrl){
-      const oldTrack = videoPlayer.querySelector('track');
-      if(oldTrack) oldTrack.remove();
-      const track=document.createElement('track');
-      track.kind="subtitles";
-      track.src=subUrl;
-      track.srclang="zh";
-      track.label="中文";
-      track.default=true;
-      videoPlayer.appendChild(track);
-    }
-    plyrInstance.play();
-
+    // 记录播放进度
     const anime = filterList[currentAnimeIndex];
-    plyrInstance.on('timeupdate',()=>{
-      if(!plyrInstance.paused){
-        localStorage.setItem(`play_${anime.title}`, JSON.stringify({
-          ep: currentEpIndex,
-          line: currentLineIndex,
-          time: plyrInstance.currentTime
-        }))
-      }
-    })
-    plyrInstance.on('loadedmetadata',()=>{
-      const saved = localStorage.getItem(`play_${anime.title}`);
-      if(saved){
-        const data = JSON.parse(saved);
-        if(data.ep === currentEpIndex && data.line === currentLineIndex){
-          plyrInstance.currentTime = data.time;
-        }
-      }
-      plyrInstance.play();
-    })
+    videoPlayer.ontimeupdate = function(){
+      localStorage.setItem(`play_${anime.title}`, JSON.stringify({
+        ep: currentEpIndex,
+        line: currentLineIndex,
+        time: videoPlayer.currentTime
+      }))
+    }
   }
 
   loadVideoData();
