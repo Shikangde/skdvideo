@@ -4,9 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>热乎の新番</title>
-<link rel="stylesheet" href="/plyr.css">
+<!-- BootCDN 国内CDN加载Plyr，解决404 -->
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.min.css">
+<script src="https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.min.js"></script>
 <script src="/hls.min.js"></script>
-<script src="/plyr.min.js"></script>
 <style>
   :root{
     --bg:#111;
@@ -588,9 +589,10 @@
       }
     }
 
-    //初始化Plyr，控件：播放、进度、当前时间、静音、音量、全屏
+    //初始化Plyr，指定bootcdn的svg图标，解决图标404
     plyrInstance = new Plyr(videoPlayer,{
-      controls:['play','progress','current-time','mute','volume','fullscreen']
+      controls:['play','progress','current-time','mute','volume','fullscreen'],
+      iconUrl: "https://cdn.bootcdn.net/ajax/libs/plyr/3.7.8/plyr.svg"
     });
     //外挂字幕
     if(subUrl){
