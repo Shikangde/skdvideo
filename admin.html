@@ -17,7 +17,7 @@ pre{background:#222;padding:12px;border‑radius:6px;white‑space:pre‑wrap;ma
 small{color:#aaa}
 .file‑wrap{margin:8px 0}
 .item‑block{border:1px solid #444;padding:10px;border‑radius:6px;margin:8px 0}
-.batch‑item{border:1px solid #484848;padding:12px;border‑radius:8px;margin‑10px 0;background:#252525}
+.batch‑item{border:1px solid #484848;padding:12px;border‑radius:8px;margin:10px 0;background:#252525}
 .anime‑list‑item{
   padding:8px 10px;
   background:#272727;
@@ -41,7 +41,7 @@ small{color:#aaa}
   <small>不导入则从空列表开始新建</small>
 </div>
 
-<!-- =========📋已有番剧清单【新增】============ -->
+<!-- =========📋已有番剧清单============ -->
 <div class="box">
   <h3>📋已有番剧清单</h3>
   <div id="animeListWrap">
@@ -54,10 +54,10 @@ small{color:#aaa}
   <div class="row">
     <div>
       <input placeholder="动漫唯一ID animeId" id="animeId">
-      <small>示例：a001，不可重复</small>
+      <small>输入带字母会自动只保留数字</small>
     </div>
     <div>
-      <input placeholder="排序权重 weight（数字越大越靠前）" id="animeWeight" value="0">
+      <input placeholder="排序权重 weight（数字越小越靠前）" id="animeWeight" value="0">
       <small>用于首页排序</small>
     </div>
   </div>
@@ -81,11 +81,11 @@ small{color:#aaa}
   <input placeholder="目标动漫ID animeId" id="appendAnimeId">
   <div class="row">
     <div>
-      <input placeholder="剧集ID epId" id="appendEpId">
-      <small>示例 ep1</small>
+      <input placeholder="剧集ID epId（同动漫内唯一，不同动漫可重复）" id="appendEpId">
+      <small>输入带字母会自动只保留数字</small>
     </div>
     <div>
-      <input placeholder="剧集权重 epWeight 数字越大越靠前" id="appendEpWeight" value="0">
+      <input placeholder="剧集权重 epWeight，0则按epId数字升序" id="appendEpWeight" value="0">
     </div>
   </div>
   <input placeholder="剧集名称 name" id="appendEpName">
@@ -135,6 +135,46 @@ small{color:#aaa}
 <script>
 let animeList = [];
 
+/**
+ * 清理ID：删除所有非数字字符，只提取数字
+ * 输入 a001 → "1"；ep5 →"5"；test → null（没有数字返回null）
+ */
+function cleanOnlyDigitId(rawInputId){
+  const match = rawInputId.match(/\d+/);
+  if(!match) return null;
+  return match[0];
+}
+
+/**
+ * 获取安全ID：同动漫内epId做冲突判断；动漫animeId全局冲突判断
+ * 1. 清理输入，只保留数字；无数字返回null拒绝保存
+ * 2. 如果id重复，自动生成 num.1、num.2
+ * @param {string} rawInputId 用户原始输入ID
+ * @param {string[]} existIdList 已经存在的id数组
+ * @returns {string|null} 成功返回处理好的id；null代表非法无法保存
+ */
+function getSafeDuplicateId(rawInputId, existIdList) {
+  const pureId = cleanOnlyDigitId(rawInputId);
+  if(pureId === null){
+    return null;
+  }
+  if(!existIdList.includes(pureId)){
+    return pureId;
+  }
+  let newId = `${pureId}.1`;
+  let seq = 2;
+  while(existIdList.includes(newId)){
+    newId = `${pureId}.${seq}`;
+    seq++;
+  }
+  return newId;
+}
+
+/** 将epId字符串(支持 1 / 2.1)转为用于比较的数字 */
+function parseEpIdNumber(epIdStr){
+  return parseFloat(epIdStr) || 0;
+}
+
 //【渲染已有番剧清单】
 function renderAnimeListPanel(){
   const wrap = document.getElementById("animeListWrap");
@@ -142,8 +182,20 @@ function renderAnimeListPanel(){
     wrap.innerHTML = `<small>暂无数据，请导入json或者新增动漫</small>`;
     return;
   }
+  const displayList = [...animeList];
+  displayList.sort((itemA,itemB)=>{
+    function getPureNum(idStr){
+      const numMatch = idStr.match(/\d+$/);
+      if(!numMatch) return 0;
+      return Number(numMatch[0]);
+    }
+    const n1 = getPureNum(itemA.animeId);
+    const n2 = getPureNum(itemB.animeId);
+    return n1 - n2;
+  });
+
   let html = "";
-  animeList.forEach(item=>{
+  displayList.forEach(item=>{
     const epCount = item.episodes ? item.episodes.length : 0;
     html += `
     <div class="anime‑list‑item">
@@ -154,6 +206,50 @@ function renderAnimeListPanel(){
     `
   })
   wrap.innerHTML = html;
+}
+
+//整体排序 + 数据清洗：
+//1.清理所有id，彻底删除残留字母符号，写入原始数组；
+//2.weight、epWeight强制转为数字；
+//3.动漫weight越小越靠前；
+//4.剧集：epWeight不为0按epWeight升序；epWeight等于0则按epId数字升序
+function sortAllData(){
+  // --------数据清洗，直接修改原始animeList--------
+  animeList.forEach(ani=>{
+    // 清理动漫animeId，只保留数字
+    const pureAid = cleanOnlyDigitId(ani.animeId);
+    if(pureAid !== null){
+      ani.animeId = pureAid;
+    }
+    // 权重强制转数字，防止字符串
+    ani.weight = Number(ani.weight)||0;
+
+    ani.episodes.forEach(ep=>{
+      //清理剧集epId，彻底删掉字母符号，写入真实数据
+      const pureEid = cleanOnlyDigitId(ep.epId);
+      if(pureEid !== null){
+        ep.epId = pureEid;
+      }
+      ep.weight = Number(ep.weight)||0;
+    })
+  })
+
+  // --------排序逻辑--------
+  animeList.sort((a,b)=> Number(a.weight) - Number(b.weight));
+  animeList.forEach(ani=>{
+    ani.episodes.sort((e1,e2)=>{
+      const w1 = Number(e1.weight);
+      const w2 = Number(e2.weight);
+      if(w1 !==0 && w2 !==0){
+        return w1 - w2;
+      }
+      return parseEpIdNumber(e1.epId) - parseEpIdNumber(e2.epId);
+    })
+  })
+
+  refreshPreview();
+  renderAnimeListPanel();
+  alert("✅已完成：数据清理 + 按权重重新排序\n(已彻底清除ID内残留字母符号，导出json即为干净数据)");
 }
 
 //导入json文件
@@ -173,6 +269,7 @@ document.getElementById('importFile').onchange = function(e){
   }
   reader.readAsText(file);
 }
+
 //添加动漫主体
 function addAnime(){
   const animeId = document.getElementById('animeId').value.trim();
@@ -188,13 +285,18 @@ function addAnime(){
     alert("动漫ID、标题不能为空");
     return;
   }
-  const exist = animeList.find(x=>x.animeId === animeId);
-  if(exist){
-    alert("该animeId已经存在，不能重复新增，请追加剧集");
+  const existAnimeIds = animeList.map(x=>x.animeId);
+  const safeId = getSafeDuplicateId(animeId, existAnimeIds);
+  if(safeId === null){
+    alert(`❌ID【${animeId}】未识别到数字，ID必须含有数字！`);
     return;
   }
+  if(safeId !== animeId){
+    alert(`✅ID自动处理：${animeId} → ${safeId}`);
+  }
+
   animeList.push({
-    animeId,
+    animeId: safeId,
     weight,
     title,
     cover,
@@ -209,6 +311,7 @@ function addAnime(){
   renderAnimeListPanel();
   alert("动漫主体添加成功！现在可以追加剧集");
 }
+
 //追加剧集（带一条线路）
 function appendEpisode(){
   const targetAid = document.getElementById('appendAnimeId').value.trim();
@@ -227,14 +330,18 @@ function appendEpisode(){
     alert("剧集ID、剧集名称、播放地址不能为空");
     return;
   }
-  //检查同动漫下epId是否重复
-  const dup = anime.episodes.find(e=>e.epId === epId);
-  if(dup){
-    alert("该动漫下epId已存在，请改用【追加线路】功能");
+  const existEpIds = anime.episodes.map(e=>e.epId);
+  const safeEpId = getSafeDuplicateId(epId, existEpIds);
+  if(safeEpId === null){
+    alert(`❌剧集ID【${epId}】未识别到数字，ID必须含有数字！`);
     return;
   }
+  if(safeEpId !== epId){
+    alert(`✅epId自动处理：${epId} → ${safeEpId}`);
+  }
+
   anime.episodes.push({
-    epId,
+    epId: safeEpId,
     weight:epWeight,
     name:epName,
     sources:[
@@ -245,6 +352,7 @@ function appendEpisode(){
   renderAnimeListPanel();
   alert("✅剧集追加完成");
 }
+
 //给已有剧集追加线路
 function appendSourceToEp(){
   const aid = document.getElementById('addLineAnimeId').value.trim();
@@ -262,19 +370,11 @@ function appendSourceToEp(){
   renderAnimeListPanel();
   alert("✅线路追加完成");
 }
-//整体排序：动漫按weight降序；每个动漫内部剧集按weight降序
-function sortAllData(){
-  animeList.sort((a,b)=> b.weight - a.weight);
-  animeList.forEach(ani=>{
-    ani.episodes.sort((e1,e2)=> e2.weight - e1.weight);
-  })
-  refreshPreview();
-  renderAnimeListPanel();
-  alert("✅已全部按权重重新排序");
-}
+
 function refreshPreview(){
   document.getElementById('jsonPreview').innerText = JSON.stringify(animeList,null,2);
 }
+
 //下载导出data.json
 function exportDownload(){
   const jsonStr = JSON.stringify(animeList,null,2);
@@ -286,6 +386,7 @@ function exportDownload(){
   a.click();
   URL.revokeObjectURL(url);
 }
+
 //复制JSON到剪贴板
 async function copyJson(){
   try{
@@ -296,6 +397,7 @@ async function copyJson(){
     alert("❌复制失败，请手动选中预览框复制："+err.message);
   }
 }
+
 function clearAll(){
   if(confirm("确认清空全部列表？不可恢复！")){
     animeList = [];
@@ -303,6 +405,7 @@ function clearAll(){
     renderAnimeListPanel();
   }
 }
+
 // ======================【批量多集逻辑】======================
 let batchIndex = 0;
 //新增一组批量输入框
@@ -334,6 +437,7 @@ function removeBatchItem(id){
   const el = document.getElementById(id);
   if(el) el.remove();
 }
+
 //批量提交全部
 function batchSubmitAll(){
   const items = document.querySelectorAll('.batch‑item');
@@ -365,18 +469,21 @@ function batchSubmitAll(){
       failMsg.push(`epId=${epId}: 找不到动漫ID【${animeId}】，请先创建动漫主体`);
       return;
     }
-    //检查epId重复
-    const dup = anime.episodes.find(e=>e.epId === epId);
-    if(dup){
-      failMsg.push(`epId=${epId}: 该动漫下剧集ID已存在，跳过`);
+    const existEpIds = anime.episodes.map(e=>e.epId);
+    const safeEpId = getSafeDuplicateId(epId, existEpIds);
+    if(safeEpId === null){
+      failMsg.push(`epId=${epId}: ❌未识别数字，跳过`);
       return;
+    }
+    if(safeEpId !== epId){
+      failMsg.push(`epId=${epId} → ${safeEpId}`);
     }
     //组装sources，线路名称固定【线路1】
     const sources = [];
     if(mp4Src) sources.push({lineName:"线路1",type:"mp4",src:mp4Src});
     if(m3u8Src) sources.push({lineName:"线路1",type:"m3u8",src:m3u8Src});
     anime.episodes.push({
-      epId,
+      epId: safeEpId,
       weight:epWeight,
       name:epName,
       sources
@@ -391,6 +498,7 @@ function batchSubmitAll(){
   }
   alert(tip);
 }
+
 //页面初始化默认给1个表单
 addBatchItem();
 renderAnimeListPanel();
