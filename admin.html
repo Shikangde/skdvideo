@@ -17,6 +17,7 @@ pre{background:#222;padding:12px;border‑radius:6px;white‑space:pre‑wrap;ma
 small{color:#aaa}
 .file‑wrap{margin:8px 0}
 .item‑block{border:1px solid #444;padding:10px;border‑radius:6px;margin:8px 0}
+.batch‑item{border:1px solid #484848;padding:12px;border‑radius:8px;margin‑10px 0;background:#252525}
 .anime‑list‑item{
   padding:8px 10px;
   background:#272727;
@@ -40,7 +41,7 @@ small{color:#aaa}
   <small>不导入则从空列表开始新建</small>
 </div>
 
-<!-- =========新增：已有番剧清单============ -->
+<!-- =========📋已有番剧清单【新增】============ -->
 <div class="box">
   <h3>📋已有番剧清单</h3>
   <div id="animeListWrap">
@@ -112,6 +113,16 @@ small{color:#aaa}
   <input placeholder="新增线路src" id="addLineSrc">
   <button onclick="appendSourceToEp()">🔗给现有剧集追加线路</button>
 </div>
+<!-- ==========④批量多集添加========== -->
+<div class="box">
+  <h3>④批量多集添加（只生成线路1；多线路请使用上面【③追加线路】）</h3>
+  <div id="batchWrap">
+    <!-- JS动态生成表单组 -->
+  </div>
+  <button onclick="addBatchItem()">➕新增一集表单</button>
+  <br>
+  <button onclick="batchSubmitAll()">✅批量提交全部</button>
+</div>
 <div class="box">
   <h3>当前全部数据预览</h3>
   <pre id="jsonPreview"></pre>
@@ -124,7 +135,7 @@ small{color:#aaa}
 <script>
 let animeList = [];
 
-//【新增函数：渲染顶部已有番剧清单】
+//【渲染已有番剧清单】
 function renderAnimeListPanel(){
   const wrap = document.getElementById("animeListWrap");
   if(animeList.length === 0){
@@ -275,7 +286,7 @@ function exportDownload(){
   a.click();
   URL.revokeObjectURL(url);
 }
-//【新增】复制JSON到剪贴板
+//复制JSON到剪贴板
 async function copyJson(){
   try{
     const jsonStr = JSON.stringify(animeList,null,2);
@@ -292,7 +303,96 @@ function clearAll(){
     renderAnimeListPanel();
   }
 }
-//页面初始化渲染清单
+// ======================【批量多集逻辑】======================
+let batchIndex = 0;
+//新增一组批量输入框
+function addBatchItem(){
+  batchIndex++;
+  const wrap = document.getElementById('batchWrap');
+  const div = document.createElement('div');
+  div.className = "batch‑item";
+  div.id = "b_"+batchIndex;
+  div.innerHTML = `
+    <h4>第${batchIndex}集</h4>
+    <input placeholder="动漫ID animeId" class="b_animeId">
+    <div class="row">
+      <div>
+        <input placeholder="剧集ID epId" class="b_epId">
+      </div>
+      <div>
+        <input placeholder="剧集权重 epWeight" class="b_epWeight" value="0">
+      </div>
+    </div>
+    <input placeholder="剧集名称 name" class="b_epName">
+    <input placeholder="mp4播放地址（选填）" class="b_mp4">
+    <input placeholder="m3u8播放地址（选填）" class="b_m3u8">
+    <button class="secondary" onclick="removeBatchItem('b_${batchIndex}')">🗑删除本组</button>
+  `;
+  wrap.appendChild(div);
+}
+function removeBatchItem(id){
+  const el = document.getElementById(id);
+  if(el) el.remove();
+}
+//批量提交全部
+function batchSubmitAll(){
+  const items = document.querySelectorAll('.batch‑item');
+  if(items.length===0){
+    alert("请先点【➕新增一集表单】");
+    return;
+  }
+  let successCnt = 0;
+  let failMsg = [];
+  items.forEach(itemDom=>{
+    const animeId = itemDom.querySelector('.b_animeId').value.trim();
+    const epId = itemDom.querySelector('.b_epId').value.trim();
+    const epWeight = Number(itemDom.querySelector('.b_epWeight').value.trim()||0);
+    const epName = itemDom.querySelector('.b_epName').value.trim();
+    const mp4Src = itemDom.querySelector('.b_mp4').value.trim();
+    const m3u8Src = itemDom.querySelector('.b_m3u8').value.trim();
+    //校验必填
+    if(!animeId || !epId || !epName){
+      failMsg.push("某一组：动漫ID/剧集ID/剧集名称不能为空，跳过");
+      return;
+    }
+    if(!mp4Src && !m3u8Src){
+      failMsg.push(`epId=${epId}: mp4和m3u8地址全部为空，跳过`);
+      return;
+    }
+    //查找动漫
+    const anime = animeList.find(x=>x.animeId === animeId);
+    if(!anime){
+      failMsg.push(`epId=${epId}: 找不到动漫ID【${animeId}】，请先创建动漫主体`);
+      return;
+    }
+    //检查epId重复
+    const dup = anime.episodes.find(e=>e.epId === epId);
+    if(dup){
+      failMsg.push(`epId=${epId}: 该动漫下剧集ID已存在，跳过`);
+      return;
+    }
+    //组装sources，线路名称固定【线路1】
+    const sources = [];
+    if(mp4Src) sources.push({lineName:"线路1",type:"mp4",src:mp4Src});
+    if(m3u8Src) sources.push({lineName:"线路1",type:"m3u8",src:m3u8Src});
+    anime.episodes.push({
+      epId,
+      weight:epWeight,
+      name:epName,
+      sources
+    });
+    successCnt++;
+  });
+  refreshPreview();
+  renderAnimeListPanel();
+  let tip = `✅成功添加：${successCnt} 条剧集\n`;
+  if(failMsg.length>0){
+    tip += "\n❌跳过条目：\n"+failMsg.join("\n");
+  }
+  alert(tip);
+}
+//页面初始化默认给1个表单
+addBatchItem();
 renderAnimeListPanel();
 </script>
 </body>
