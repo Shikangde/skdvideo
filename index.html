@@ -71,6 +71,13 @@
   .navbar .nav-menu a:hover {
     opacity: 1;
   }
+  /* 导航栏【反馈】固定红色文字 */
+  .nav-feedback{
+    color: var(--primary) !important;
+  }
+  .nav‑feedback:active{
+    opacity:0.7;
+  }
   .nav-right{
     display:flex;
     gap:16px;
@@ -287,13 +294,18 @@
     padding-right:4px;
   }
   .ep-item{
-    padding:8px;border-radius:6px;background:#333;text-align:center;cursor:pointer;
+    padding:8px;border-radius:6px;background:#333;color:#fff;text-align:center;cursor:pointer;
   }
   .ep-item.active{
     background:var(--primary);
+    color:#fff;
   }
   .light-theme .ep-item{
     background:#eee;color:#111;
+  }
+  .light-theme .ep-item.active{
+    background:var(--primary);
+    color:#ffffff;
   }
   @media (max-width: 1400px) {
     .video-grid {
@@ -337,7 +349,8 @@
     <li><a href="#">新番</a></li>
     <li><a href="#">动画</a></li>
     <li><a href="#">电影</a></li>
-    <li><a href="#">剧集</a></li>
+    <!-- 把原来的【剧集】替换成红色文字【反馈】，点击触发弹窗 -->
+    <li><a href="#" class="nav-feedback" onclick="openFeedbackNotice(event)">反馈</a></li>
   </ul>
   <div class="nav-right">
     <div class="search-box">
@@ -346,7 +359,6 @@
     <button id="themeBtn">🌓 切换主题</button>
   </div>
 </nav>
-
 <!-- 主推荐横幅 -->
 <section class="hero">
   <div class="hero-content">
@@ -355,13 +367,11 @@
     <button class="btn-play" onclick="openDetail(0)">立即播放</button>
   </div>
 </section>
-
 <!-- 视频列表 -->
 <section class="section">
   <h2 class="section-title">最近更新的当季番剧 <a href="#">查看更多 ></a></h2>
   <div class="video-grid" id="videoGrid"></div>
 </section>
-
 <!-- 详情+选集弹窗 -->
 <div class="detail-modal" id="detailModal">
   <div class="detail-wrap">
@@ -384,7 +394,6 @@
     </div>
   </div>
 </div>
-
 <script>
   const grid = document.getElementById("videoGrid");
   const detailModal = document.getElementById("detailModal");
@@ -395,13 +404,25 @@
   const detailTitle = document.getElementById("detailTitle");
   const detailMeta = document.getElementById("detailMeta");
   const epList = document.getElementById("epList");
-
   let hls = null;
   let videoList = [];
   let filterList = [];
   let currentAnimeIndex = null;
   let currentEpIndex = null;
   let currentLineIndex = 0;
+
+
+  //##################################################
+  //                   ↓在这里编辑公告文字↓
+  const FEEDBACK_NOTICE = `欢迎反馈问题！
+资源失效、bug、建议都可以提交。`;
+  //                   ↑在这里编辑公告文字↑
+  //##################################################
+  function openFeedbackNotice(e){
+    e.preventDefault();
+    alert(FEEDBACK_NOTICE);
+  }
+
 
   // ========== 主题切换 ==========
   function loadTheme(){
@@ -416,7 +437,6 @@
     localStorage.setItem("siteTheme", isLight ? "light":"dark");
   }
   loadTheme();
-
   // ========== 播放器快捷键 ==========
   videoPlayer.addEventListener('keydown', function(e){
     switch(e.code){
@@ -447,7 +467,6 @@
         break;
     }
   })
-
   // ========== 读取data.json ==========
   async function loadVideoData(){
     const res = await fetch('data.json');
@@ -455,7 +474,6 @@
     filterList = [...videoList];
     renderCards();
   }
-
   // ========== 渲染卡片，修复图片空链接背景问题 ==========
   function renderCards() {
     grid.innerHTML = "";
@@ -466,11 +484,9 @@
     filterList.forEach((v, index) => {
       const card = document.createElement("div");
       card.className = "video-card";
-
       // cover背景图片兜底，为空就不设置background‑image
       const coverBg = v.cover ? `background-image:url('${v.cover}')` : "";
       const previewBg = v.previewThumb ? `background-image:url('${v.previewThumb}')` : "";
-
       card.innerHTML = `
         <div class="cover" style="${coverBg}">
           <span class="tag">${v.tag}</span>
@@ -485,7 +501,6 @@
       grid.appendChild(card);
     });
   }
-
   // ========== 搜索 ==========
   function filterVideo(){
     const keyword = searchInput.value.trim().toLowerCase();
@@ -499,14 +514,12 @@
     renderCards();
   }
   searchInput.addEventListener('input', filterVideo);
-
   // ========== 打开详情弹窗 ==========
   function openDetail(idx){
     currentAnimeIndex = idx;
     const anime = filterList[idx];
     detailTitle.innerText = anime.title;
     detailMeta.innerText = `${anime.meta} | ${anime.year}`;
-
     epList.innerHTML = "";
     anime.episodes.forEach((ep, eIdx)=>{
       const epBtn = document.createElement("div");
@@ -516,7 +529,6 @@
       epList.appendChild(epBtn);
     })
     detailModal.classList.add("show");
-
     const savedProgress = localStorage.getItem(`play_${anime.title}`);
     if(savedProgress){
       const saved = JSON.parse(savedProgress);
@@ -526,10 +538,8 @@
       currentEpIndex = 0;
       currentLineIndex = 0;
     }
-
     playEp(currentEpIndex);
   }
-
   //渲染线路下拉框
   function renderLineSelect(ep){
     lineSelect.innerHTML = "";
@@ -545,7 +555,6 @@
       playCurrentSource();
     }
   }
-
   //播放指定集数
   function playEp(epIdx){
     currentEpIndex = epIdx;
@@ -557,14 +566,12 @@
     renderLineSelect(ep);
     playCurrentSource();
   }
-
   function playCurrentSource(){
     const anime = filterList[currentAnimeIndex];
     const ep = anime.episodes[currentEpIndex];
     const source = ep.sources[currentLineIndex];
     playVideo(source.type, source.src, source.subtitle);
   }
-
   //关闭详情弹窗
   function closeDetail(){
     detailModal.classList.remove("show");
@@ -574,7 +581,6 @@
       hls = null;
     }
   }
-
   // ========== 播放核心 ==========
   function playVideo(type, url, subUrl){
     if (hls) {
@@ -582,7 +588,6 @@
       hls = null;
     }
     videoPlayer.src = "";
-
     // 原生播放器仅支持 mp4 / m3u8
     if (type === "mp4") {
       videoPlayer.src = url;
@@ -617,7 +622,6 @@
       videoPlayer.play();
     }
   }
-
   loadVideoData();
 </script>
 </body>
