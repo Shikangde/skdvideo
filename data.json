@@ -729,5 +729,442 @@
         ]
       }
     ]
+  },
+  {
+    "animeId": "4",
+    "weight": 0,
+    "title": "总之就是非常可爱",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250204-1/f2043fbd78ebb049b3edc0a7c3bba6ba.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27062_861fc05a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27058_1f98b825/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27066_82ab46c6/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27060_604580f8/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27064_782a229a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27067_b53b3c9f/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27069_7c9c1ec6/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27070_521255db/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27071_6151ca1f/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27073_841b9457/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27081_0bec370d/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27084_4e2c589c/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "13",
+        "weight": 0,
+        "name": "第13集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/27094_da960bb5/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "5",
+    "weight": 0,
+    "title": "总之就是非常可爱～SNS～",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250205-1/b8e14235514ff6d65dc409768b1dbf5c.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "HD中字",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250120/11457_57b4b4a2/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "6",
+    "weight": 0,
+    "title": "总之就是非常可爱女子高中篇",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250211-1/9b74316130a6339351fc354f04aa4041.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21408_e207f16c/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21415_1e915f88/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21413_50fa544a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21419_e5fa8a71/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "7",
+    "weight": 0,
+    "title": "总之就是非常可爱～制服～",
+    "cover": "",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "HD中字",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250212/60885_dd0afe08/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "8",
+    "weight": 0,
+    "title": "总之就是非常可爱第二季",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250211-1/b097c95869162630a8538ebf4f467b70.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21387_7c581b41/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21388_00e53a7b/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21391_109ac6c7/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21395_69726edf/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21396_2d31d718/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21399_07e6663e/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21392_b681006b/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21404_f08ddeee/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21405_69433173/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21401_f9a78afd/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21381_f928b521/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21411_06669751/index.m3u8"
+          }
+        ]
+      }
+    ]
   }
 ]
