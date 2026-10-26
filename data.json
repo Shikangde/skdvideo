@@ -1166,5 +1166,790 @@
         ]
       }
     ]
+  },
+  {
+    "animeId": "9",
+    "weight": 0,
+    "title": "租借女友",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250217-1/54fb8100eda55e2b309e0214e1a17b56.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26820_1d9aa373/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26812_b43c598f/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26807_4b2e0217/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26813_ffa5d62e/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26809_078a070b/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26814_8aaa8d95/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26815_4e257179/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26816_d7a47699/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26819_3980c69a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26817_95932ec3/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26822_31731921/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250201/26826_7e8f7238/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "10",
+    "weight": 0,
+    "title": "租借女友2",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250208-1/c9468c1a565e156e104858cf68f3f582.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15039_301c8eb1/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15054_d9a84905/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15085_be1bfa4e/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15108_c441b779/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15144_372de59e/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15174_1a3d6a5a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15214_8a286105/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15243_2e310f29/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15327_7dc5541a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15400_a3014fc3/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15437_f02b3153/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250122/15620_4456cdcd/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "11",
+    "weight": 0,
+    "title": "租借女友3",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250211-1/27bb6fc97bc67d1ecfb7ba326f7c0262.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21361_95ef1128/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21366_b32016b9/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21364_6b387ebb/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21368_9b389653/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21371_a921dee1/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21317_cb53c399/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21376_2338fea3/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21373_5f650923/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21378_47aad768/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21383_c11f2855/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21384_c8fd9e36/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250127/21377_c7cca85f/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "12",
+    "weight": 0,
+    "title": "租借女友4",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20250709-1/923183f278c23aa8a7c5d8fea5750cf7.jpg",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-hot.com/20250709/96242_6da62b74/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250713/26819_3980c69a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250716/27096_0722ba57/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250726/28267_81aa5aa1/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cine.com/20250730/43820_8f7062bc/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250810/29738_f7660627/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250814/30116_082a1d41/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250822/31186_6784ac07/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250902/33057_d1d8b9bb/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cinema.com/20250902/33058_1f163d2c/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cine.com/20250910/55528_415f5965/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-cine.com/20250916/56120_3d23d15e/index.m3u8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "animeId": "13",
+    "weight": 0,
+    "title": "租借女友5",
+    "cover": "https://img.dytt-tupian.com/upload/vod/20260408-1/33702faec18b7b67cab55c29b291cc65.webp",
+    "previewThumb": "",
+    "tag": "更新",
+    "meta": "番剧",
+    "year": "2026",
+    "description": "",
+    "episodes": [
+      {
+        "epId": "1",
+        "weight": 0,
+        "name": "第01集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260408/15796_bff23d5f/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "2",
+        "weight": 0,
+        "name": "第02集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260415/16661_579c06a0/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "3",
+        "weight": 0,
+        "name": "第03集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260422/17525_af71676c/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "4",
+        "weight": 0,
+        "name": "第04集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260429/18338_9c6ebba8/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "5",
+        "weight": 0,
+        "name": "第05集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260506/19152_d28c252a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "6",
+        "weight": 0,
+        "name": "第06集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260513/19983_da45319d/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "7",
+        "weight": 0,
+        "name": "第07集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260520/20777_91ede05a/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "8",
+        "weight": 0,
+        "name": "第08集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260527/21653_98ea0912/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "9",
+        "weight": 0,
+        "name": "第09集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260603/22636_de139000/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "10",
+        "weight": 0,
+        "name": "第10集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260610/23516_2ec4332c/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "11",
+        "weight": 0,
+        "name": "第11集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260618/24436_77b7032b/index.m3u8"
+          }
+        ]
+      },
+      {
+        "epId": "12",
+        "weight": 0,
+        "name": "第12集",
+        "sources": [
+          {
+            "lineName": "dyttm3u8",
+            "type": "m3u8",
+            "src": "https://vip.dytt-tvs.com/20260624/25316_51f2e9ae/index.m3u8"
+          }
+        ]
+      }
+    ]
   }
 ]
